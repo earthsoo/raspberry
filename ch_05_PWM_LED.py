@@ -1,31 +1,31 @@
 import RPi.GPIO as GPIO
 import time
 
-#ºÒÇÊ¿äÇÑ warning Á¦°Å
+#ë¶ˆí•„ìš”í•œ warning ì œê±°
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(18,GPIO.OUT)
-#PWM ÀÎ½ºÅÏ½º p ¸¸µé°í, 18¹ø ÇÉÀ» PWMÇÉÀ¸·Î ¼³Á¤, ÁÖÆÄ¼ö = 50
+#PWM ì¸ìŠ¤í„´ìŠ¤ p ë§Œë“¤ê³ , 18ë²ˆ í•€ì„ PWMí•€ìœ¼ë¡œ ì„¤ì •, ì£¼íŒŒìˆ˜ = 50
 p = GPIO.PWM(18,50)
 
 p.start(0)
 
 try:
     while 1:
-        #dc°ªÀ» 0¿¡¼­ 100±îÁö 5¸¸Å­ Áõ°¡
+        #dcê°’ì„ 0ì—ì„œ 100ê¹Œì§€ 5ë§Œí¼ ì¦ê°€
         for dc in range(0,101,5):
-            #µàÆ¼ºñ º¯°æ
+            #ë“€í‹°ë¹„ ë³€ê²½
             p.ChangeDytyCycle(dc)
             time.sleep(0.1)
-        #dc°ª 100¿¡¼­ 0±îÁö 5¸¸Å­ °¨¼Ò
+        #dcê°’ 100ì—ì„œ 0ê¹Œì§€ 5ë§Œí¼ ê°ì†Œ
         for dc in range(100,-1,-5):
-            #µàÆ¼ºñ º¯°æ
-            p.ChaneDutyCycle(dc)
+            #ë“€í‹°ë¹„ ë³€ê²½
+            p.ChangeDutyCycle(dc)
             time.sleep(0.1)
 
-except KeyboardInterrupt: #Ctrl+c ¿¹¿Ü¹ß»ıÀ¸·Î ¿­¿Ü½ÃÅ°±â
+except KeyboardInterrupt: #Ctrl+c ì˜ˆì™¸ë°œìƒìœ¼ë¡œ ì—´ì™¸ì‹œí‚¤ê¸°
     pass
 
-p.stop() #pwmÁ¾·á
+p.stop() #pwmì¢…ë£Œ
 GPIO.cleanup()
