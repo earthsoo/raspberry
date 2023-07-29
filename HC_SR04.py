@@ -1,29 +1,29 @@
 import RPi.GPIO as GPIO
 import time
 
-GPIO.setmode(GPIO,BCM)
+GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
-#TRIGGERÇÉ°ú ECHOÇÉ ¼³Á¤
+#TRIGGERí•€ê³¼ ECHOí•€ ì„¤ì •
 TRIG = 23
 ECHO = 24
 print("Distance meaasurement in progress")
 
-#TRIG¿Í ECHO¸¦ °¢°¢ Ãâ·Â, ÀÔ·ÂÇÉÀ¸·Î ¼³Á¤.
-#TRIG°¡ ÃÊÀ½ÆÄ ¹ñ´Â °Å, ECHO°¡ µ¹¾Æ¿À´Â ÃÊÀ½ÆÄ ÀÎ½Ä
+#TRIGì™€ ECHOë¥¼ ê°ê° ì¶œë ¥, ì…ë ¥í•€ìœ¼ë¡œ ì„¤ì •.
+#TRIGê°€ ì´ˆìŒíŒŒ ë±‰ëŠ” ê±°, ECHOê°€ ëŒì•„ì˜¤ëŠ” ì´ˆìŒíŒŒ ì¸ì‹
 GPIO.setup(TRIG,GPIO.OUT)
 GPIO.setup(ECHO,GPIO.IN)
 
-#ÃÊ±â¿¡ trig ½ÅÈ£ 0À¸·Î Ãâ·Â
+#ì´ˆê¸°ì— trig ì‹ í˜¸ 0ìœ¼ë¡œ ì¶œë ¥
 GPIO.output(TRIG,False)
 print("Waiting for sensor to settle")
 time.sleep(2)
 
 try:
    while True:
-       #ÆŞ½º½ÅÈ£¸¦ ¸¸µé±â À§ÇØ trigÇÉ¿¡ 1Ãâ·Â
-       #ÆŞ½º½ÅÈ£==1 ÀÌ¶ó´Â °ÍÀº trig Ãâ·ÂÀÌ¶ó´Â °ÍÀÓ
-       GPIO.ouput(TRIG,True)
+       #í„ìŠ¤ì‹ í˜¸ë¥¼ ë§Œë“¤ê¸° ìœ„í•´ trigí•€ì— 1ì¶œë ¥
+       #í„ìŠ¤ì‹ í˜¸==1 ì´ë¼ëŠ” ê²ƒì€ trig ì¶œë ¥ì´ë¼ëŠ” ê²ƒì„
+       GPIO.output(TRIG,True)
        time.sleep(0.00001)
        GPIO.output(TRIG,False)
 
@@ -32,12 +32,12 @@ try:
        while GPIO.input(ECHO) == 1:
            stop = time.time()
 
-        #echo¿¡¼­ ÆŞ½º ½ÅÈ£ ¹ŞÀº °Å ½Ã°£ Â÷ °è»ê
+        #echoì—ì„œ í„ìŠ¤ ì‹ í˜¸ ë°›ì€ ê±° ì‹œê°„ ì°¨ ê³„ì‚°
        check_time = stop - start
-       #ÃÊÀ½ÆÄ °Å¸® °è»ê
+       #ì´ˆìŒíŒŒ ê±°ë¦¬ ê³„ì‚°
        distance=check_time * 34300 / 2
        print("Distance : %.1f cm"% distance)
-       #0.4ÃÊ °£°İÀ¸·Î ¼¾¼­ ÃøÁ¤
+       #0.4ì´ˆ ê°„ê²©ìœ¼ë¡œ ì„¼ì„œ ì¸¡ì •
        time.sleep(0.4)
 
 except KeyboardInterrupt:
